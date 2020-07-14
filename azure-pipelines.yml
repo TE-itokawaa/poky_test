@@ -35,7 +35,7 @@ stages:
         cd poky
         git fetch --tags
         git checkout tags/yocto-2.7 -b my-yocto-2.7
-        docker run --rm \
+        docker run -it --rm \
             -v $(pwd):$(pwd) \
             -w $(pwd) \
             $(tag) \
