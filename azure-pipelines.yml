@@ -28,4 +28,14 @@ stages:
         tags: |
           $(tag)
 
-    - script: echo aaaaaaaa
+    - script: |
+        git clone git://git.yoctoproject.org/poky
+        cd poky
+        git fetch --tags
+        git checkout tags/yocto-2.7 -b my-yocto-2.7
+        docker run --rm \
+            -u $(id -u):$(id -g) \
+            -v $(pwd):$(pwd) \
+            -w $(pwd) \
+            yocto:latest \
+            /bin/bash -c 'source oe-init-build-env &&  bitbake core-image-sato'
