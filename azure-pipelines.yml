@@ -29,6 +29,8 @@ stages:
           $(tag)
 
     - script: |
+        git config --global user.email "experiment@gyz.co.jp"
+        git config --global user.name "itokawaa"
         git clone git://git.yoctoproject.org/poky
         cd poky
         git fetch --tags
