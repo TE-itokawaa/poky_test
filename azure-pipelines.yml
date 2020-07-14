@@ -20,15 +20,23 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
-
+#
+#    - task: Docker@2
+#
+#      displayName: Build an image
+#
+#      inputs:
+#
+#        command: build
+#
+#        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+#
+#        tags: |
+#
+#          $(tag)
+#
     - script: |
+        docker build -f $(dockerfile) -t yocto:latest .
         git config --global user.email "experiment@gyz.co.jp"
         git config --global user.name "itokawaa"
         git clone git://git.yoctoproject.org/poky
@@ -38,5 +46,5 @@ stages:
         docker run -it --rm \
             -v $(pwd):$(pwd) \
             -w $(pwd) \
-            $(tag) \
+            yocto:latest \
             /bin/bash -c 'source oe-init-build-env &&  bitbake core-image-sato'
