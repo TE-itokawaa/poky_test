@@ -38,5 +38,5 @@ stages:
         docker run --rm \
             -v $(pwd):$(pwd) \
             -w $(pwd) \
-            yocto:latest \
+            $(tag) \
             /bin/bash -c 'source oe-init-build-env &&  bitbake core-image-sato'
