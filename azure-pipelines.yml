@@ -37,7 +37,6 @@ stages:
 #
 #          $(tag)
 #
-#
     - script: |
         docker build -f $(dockerfile) -t yocto:latest .
         git config --global user.email "experiment@gyz.co.jp"
