@@ -10,24 +10,31 @@ variables:
   tag: '$(Build.BuildId)'
   dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
 
-steps:
-- script: |
-    docker build -f $(dockerfile) -t yocto:latest .
-  displayName: 'Docker Build'
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    timeoutInMinutes: 0
+    displayName: Build
+    steps:
+    - script: |
+        docker build -f $(dockerfile) -t yocto:latest .
+      displayName: 'Docker Build'
     
-- script: |
-    cd /datadrive
-    git clone git://git.yoctoproject.org/poky
-  displayName: 'clone poky'
+    - script: |
+        cd /datadrive
+        git clone git://git.yoctoproject.org/poky
+      displayName: 'clone poky'
 
-- script: |
-    cd /datadrive/poky
-    git fetch --tags
-    git checkout tags/yocto-2.7 -b my-yocto-2.7
-    docker run --rm \
-        -u $(id -u):$(id -g) \
-        -v $(pwd):$(pwd) \
-        -w $(pwd) \
-        yocto:latest \
-        /bin/bash -c 'source oe-init-build-env &&  bitbake core-image-sato'
-  displayName: 'execute bitbake'
+    - script: |
+        cd /datadrive/poky
+        git fetch --tags
+        git checkout tags/yocto-2.7 -b my-yocto-2.7
+        docker run --rm \
+            -u $(id -u):$(id -g) \
+            -v $(pwd):$(pwd) \
+            -w $(pwd) \
+            yocto:latest \
+            /bin/bash -c 'source oe-init-build-env &&  bitbake core-image-sato'
+      displayName: 'execute bitbake'
