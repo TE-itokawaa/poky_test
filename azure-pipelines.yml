@@ -1,53 +1,21 @@
-# Docker
-# Build a Docker image 
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
 trigger:
 - master
 
-resources:
-- repo: self
+# ----------------------------------------------------
+# ここで Agent Pool の名前を指定しているのが重要です。
+# ----------------------------------------------------
+pool: Self Hosted Pool
 
-variables:
-  tag: '$(Build.BuildId)'
-  dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
 
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:  
-  - job: Build
-    timeoutInMinutes: 0
-    displayName: Build
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-#
-#    - task: Docker@2
-#
-#      displayName: Build an image
-#
-#      inputs:
-#
-#        command: build
-#
-#        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-#
-#        tags: |
-#
-#          $(tag)
-#
-    - script: |
-        docker build -f $(dockerfile) -t yocto:latest .
-        git config --global user.email "experiment@gyz.co.jp"
-        git config --global user.name "itokawaa"
-        git clone git://git.yoctoproject.org/poky
-        cd poky
-        git fetch --tags
-        git checkout tags/yocto-2.7 -b my-yocto-2.7
-        docker run --rm \
-            -u $(id -u):$(id -g) \
-            -v $(pwd):$(pwd) \
-            -w $(pwd) \
-            yocto:latest \
-            /bin/bash -c 'source oe-init-build-env &&  bitbake core-image-sato'
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
