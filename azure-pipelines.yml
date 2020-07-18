@@ -23,10 +23,10 @@ stages:
         docker build -f $(dockerfile) -t yocto:latest .
       displayName: 'Docker Build'
     
-    - script: |
-        cd /datadrive
-        git clone git://git.yoctoproject.org/poky
-      displayName: 'clone poky'
+#    - script: |
+#        cd /datadrive
+#        git clone git://git.yoctoproject.org/poky
+#      displayName: 'clone poky'
 
     - script: |
         cd /datadrive/poky
