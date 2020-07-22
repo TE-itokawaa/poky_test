@@ -7,6 +7,18 @@ trigger:
 
 pool: Self Hosted Pool
 
-- script: |
-  echo 'hello!'
-  displayName: 'Docker Build'
+variables:
+  tag: '$(Build.BuildId)'
+  dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    timeoutInMinutes: 0
+    displayName: Build
+    steps:
+    - script: |
+        docker build -f $(dockerfile) -t yocto:latest .
+      displayName: 'Docker Build'
