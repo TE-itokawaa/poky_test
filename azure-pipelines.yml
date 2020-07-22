@@ -7,14 +7,6 @@ trigger:
 
 pool: Self Hosted Pool
 
-stages:
-- stage: Build
-  displayName: Build image
-  jobs:  
-  - job: Build
-    timeoutInMinutes: 0
-    displayName: Build
-    steps:
-    - script: |
-      echo 'hello!'
-      displayName: 'Docker Build'
+- script: |
+  echo 'hello!'
+  displayName: 'Docker Build'
