@@ -2,8 +2,16 @@
 # Build a Docker image 
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 #
-trigger:
-- master
+trigger: none
+pr: none
+
+schedules:
+- cron: "10 01 * * *"
+  displayName: Daily build
+  branches:
+    include:
+    - master
+  always: true
 
 pool: Self Hosted Pool
 
@@ -21,5 +29,5 @@ stages:
     steps:
     - script: |
         echo $(pwd)
-        echo ls -l
+        echo ls | xargs echo
       displayName: 'Docker Build'
