@@ -6,7 +6,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: "48 03 * * *"
+- cron: "53 03 * * *"
   displayName: Daily build
   branches:
     include:
@@ -38,8 +38,6 @@ stages:
   - job: Deploy
     timeoutInMinutes: 0
     displayName: Deploy
-    strategy:
-      # default deployment strategy, more coming...
-      deploy:
-        steps:
-        - script: cp /datadrive/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86-20200718051321.qemuboot.conf /home/itokawa/
+    deploy:
+      steps:
+      - script: cp /datadrive/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86-20200718051321.qemuboot.conf /home/itokawa/
