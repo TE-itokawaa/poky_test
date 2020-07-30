@@ -6,7 +6,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: "00 04 * * *"
+- cron: "41 05 * * *"
   displayName: Daily build
   branches:
     include:
@@ -33,10 +33,14 @@ stages:
       displayName: 'Docker Build'
     
 - stage: Deploy
-  displayName: Deploy image
   jobs:
-  - job: Deploy
-    timeoutInMinutes: 0
-    displayName: Deploy
-    steps:
-    - script: cp /datadrive/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86-20200718051321.qemuboot.conf /home/itokawa/
+    # track deployments on the environment
+  - deployment: Deploy
+    #environment: 'smarthotel-dev'
+    strategy:
+      # default deployment strategy
+      runOnce:
+        deploy:
+          steps:
+          - script: cp /datadrive/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86-20200718051321.qemuboot.conf /home/itokawa/
+            displayName: 'Deploy Images'
