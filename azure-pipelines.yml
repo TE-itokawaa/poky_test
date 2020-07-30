@@ -6,7 +6,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: "55 01 * * *"
+- cron: "40 03 * * *"
   displayName: Daily build
   branches:
     include:
@@ -29,5 +29,18 @@ stages:
     steps:
     - script: |
         echo $(pwd)
-        ls | xargs echo
+        echo ls -l > /home/itokawa/aaaaa.log
       displayName: 'Docker Build'
+    
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+  - job: Deploy
+    timeoutInMinutes: 0
+    displayName: Deploy
+    strategy:
+      # default deployment strategy, more coming...
+      runOnce:
+        deploy:
+          steps:
+          - script: cp /datadrive/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86-20200718051321.qemuboot.conf /home/itokawa/
