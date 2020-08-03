@@ -6,7 +6,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: "55 03 * * *"
+- cron: "25 04 * * *"
   displayName: Daily build
   branches:
     include:
