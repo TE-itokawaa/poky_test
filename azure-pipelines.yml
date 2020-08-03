@@ -6,7 +6,7 @@ trigger: none
 pr: none
 
 schedules:
-- cron: "31 02 * * *"
+- cron: "38 02 * * *"
   displayName: Daily build
   branches:
     include:
@@ -42,7 +42,7 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: cp /datadrive/poky/build/tmp/deploy/images/qemux86/core-image-minimal-qemux86-20200718051321.qemuboot.conf /home/itokawa/artest/
+          - script: cp -rf /datadrive/poky/build/tmp/deploy/ /home/itokawa/artest/
             displayName: 'Deploy Images'
           - task: PublishBuildArtifacts@1
             inputs:
